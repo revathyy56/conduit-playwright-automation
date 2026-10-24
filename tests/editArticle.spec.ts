@@ -3,7 +3,7 @@ import { expect } from '@playwright/test'
 import { articles } from '../testData/data'
 
 test.describe('Edit Article', () => {
-    // Attach a screenshot when a test fails
+    // Attach a screenshot - when test fails
     test.afterEach(async ({ page }, testInfo) => {
         if (testInfo.status !== testInfo.expectedStatus) {
             await testInfo.attach('failure', { body: await page.screenshot(), contentType: 'image/png' })
@@ -16,14 +16,14 @@ test.describe('Edit Article', () => {
         const newTitle = `${uniqueTitle} Edited`
         const newBody = 'This body was updated by the edit test.'
 
-        // create an article to edit
+        // create an article
         await page.goto('/')
         await homePage.openNewArticle()
         await editorPage.publishArticle(uniqueTitle, about, body, tag)
         const articleTitle = await articlePage.isArticleTitleDisplayed()
         await expect(articleTitle).toHaveText(uniqueTitle)
 
-        // edit it
+        // edit article
         await articlePage.editArticle()
         await expect(page).toHaveURL(/editor/)
         await editorPage.updateArticle(newTitle, newBody)

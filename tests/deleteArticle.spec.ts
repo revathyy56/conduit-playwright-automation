@@ -3,7 +3,7 @@ import { expect } from '@playwright/test'
 import { articles } from '../testData/data'
 
 test.describe('Delete Article', () => {
-    // Attach a screenshot when a test fails
+    // Attach a screenshot - when test fails
     test.afterEach(async ({ page }, testInfo) => {
         if (testInfo.status !== testInfo.expectedStatus) {
             await testInfo.attach('failure', { body: await page.screenshot(), contentType: 'image/png' })
@@ -14,14 +14,14 @@ test.describe('Delete Article', () => {
         const { title, about, body, tag } = articles[1]
         const uniqueTitle = `${title} ${Date.now()}`
 
-        // create an article to delete
+        // create an article
         await page.goto('/')
         await homePage.openNewArticle()
         await editorPage.publishArticle(uniqueTitle, about, body, tag)
         const articleTitle = await articlePage.isArticleTitleDisplayed()
         await expect(articleTitle).toHaveText(uniqueTitle)
 
-        // delete it
+        // delete article 
         await articlePage.deleteArticle()
         await expect(page).not.toHaveURL(/article/)
         await homePage.openGlobalFeed()

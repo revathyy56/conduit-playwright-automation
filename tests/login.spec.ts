@@ -2,7 +2,6 @@ import { test } from '../lib/fixtures/conduitPageFixtures'
 import { expect } from '@playwright/test'
 import { env } from '../testData/data'
 
-// These tests need a logged-OUT browser, so drop the saved session
 test.use({ storageState: { cookies: [], origins: [] } })
 
 test.describe('Login', () => {
@@ -10,7 +9,7 @@ test.describe('Login', () => {
         await page.goto('/login')
     })
 
-    // Attach a screenshot when a test fails
+    // Attach a screenshot - when test fails
     test.afterEach(async ({ page }, testInfo) => {
         if (testInfo.status !== testInfo.expectedStatus) {
             await testInfo.attach('failure', { body: await page.screenshot(), contentType: 'image/png' })
