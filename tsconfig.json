@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "ESNext",
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "types": [
+            "node"
+        ]
+    }
+}
