@@ -26,4 +26,8 @@ export default class HomePage {
     async articleInFeed(title: string): Promise<Locator> {
         return this.page.getByRole('heading', { name: title })
     }
+
+    async openArticle(title: string) {
+        await this.page.getByRole('link', { name: title }).first().click()
+    }
 }

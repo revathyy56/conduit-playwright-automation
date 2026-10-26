@@ -1,6 +1,6 @@
 import { test } from '../lib/fixtures/conduitPageFixtures'
 import { expect } from '@playwright/test'
-import { articles } from '../testData/data'
+import { articles, timeStamp } from '../testData/data'
 
 test.describe('Edit Article', () => {
     // Attach a screenshot - when test fails
@@ -12,7 +12,7 @@ test.describe('Edit Article', () => {
 
     test('edits the title and body of an article', async ({ page, homePage, editorPage, articlePage }) => {
         const { title, about, body, tag } = articles[0]
-        const uniqueTitle = `${title} ${Date.now()}`
+        const uniqueTitle = `${title} ${timeStamp()}`
         const newTitle = `${uniqueTitle} Edited`
         const newBody = 'This body was updated by the edit test.'
 

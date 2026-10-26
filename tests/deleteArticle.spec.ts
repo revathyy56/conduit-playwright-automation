@@ -10,22 +10,22 @@ test.describe('Delete Article', () => {
         }
     })
 
-    test('deletes an article', async ({ page, homePage, editorPage, articlePage }) => {
-        const { title, about, body, tag } = articles[1]
-        const uniqueTitle = `${title} ${Date.now()}`
-
-        // create an article
+    // Deletes only one of the articles added by addArticle.spec.ts
+    test('deletes an article', async ({ page, homePage, articlePage }) => {
         await page.goto('/')
-        await homePage.openNewArticle()
-        await editorPage.publishArticle(uniqueTitle, about, body, tag)
-        const articleTitle = await articlePage.isArticleTitleDisplayed()
-        await expect(articleTitle).toHaveText(uniqueTitle)
+        await homePage.openGlobalFeed()
+        await homePage.openArticle(articles[2].title)
+        await expect(page).toHaveURL(/article/)
 
-        // delete article 
+        const articleTitle = await articlePage.isArticleTitleDisplayed()
+        await expect(articleTitle).toContainText(articles[2].title)
+        const deletedTitle = await articleTitle.textContent()
+
         await articlePage.deleteArticle()
         await expect(page).not.toHaveURL(/article/)
+
         await homePage.openGlobalFeed()
-        const deleted = await homePage.articleInFeed(uniqueTitle)
+        const deleted = await homePage.articleInFeed(deletedTitle!)
         await expect(deleted).toHaveCount(0)
     })
 })

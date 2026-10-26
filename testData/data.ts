@@ -1,4 +1,3 @@
-// Glue file: combines .env (where/who) with .json (what to test with), adds types
 import articleData from './articles.json'
 
 export type Article = { title: string, about: string, body: string, tag: string }
@@ -16,3 +15,8 @@ export const env = {
 }
 
 export const articles: Article[] = articleData.articles
+
+// Current date and time as yyyymmddhhmmss, added to article titles to keep them unique
+export function timeStamp(): string {
+    return new Date().toISOString().replace(/[-:T]/g, '').slice(0, 14)
+}
