@@ -11,7 +11,6 @@ export default class ArticlePage {
         this.page = page
         this.heading = this.page.getByRole('heading', { level: 1 })
         this.bodyText = this.page.locator('.article-content')
-        // Edit/Delete buttons are shown in the banner and again at the bottom
         this.editBtn = this.page.getByRole('link', { name: 'Edit Article' }).first()
         this.deleteBtn = this.page.getByRole('button', { name: 'Delete Article' }).first()
     }

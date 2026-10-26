@@ -2,10 +2,10 @@ import { defineConfig, devices } from '@playwright/test';
 import dotenv from 'dotenv';
 import path from 'path';
 
-/* Read CONDUIT_* variables from .env */
+
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 
-/* Saved login session, shared by every test */
+// Saved login session
 export const authFile = path.join(__dirname, '.auth/user.json');
 
 export default defineConfig({
@@ -26,12 +26,16 @@ export default defineConfig({
     screenshot: 'only-on-failure',
   },
   projects: [
-    /* 1. Login once and save the session */
     {
       name: 'setup',
       testMatch: /.*\.setup\.ts/,
+      teardown: 'teardown',
     },
-    /* 2. All spec files start already logged in */
+    {
+      name: 'teardown',
+      testMatch: /.*\.teardown\.ts/,
+      use: { storageState: authFile },
+    },
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'], storageState: authFile },

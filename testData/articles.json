@@ -1,7 +1,19 @@
 {
     "articles": [
-        { "title": "Playwright Basics", "about": "Learning Playwright", "body": "Locators and assertions are the basics.", "tag": "playwright" },
-        { "title": "Page Object Model", "about": "Organising page code", "body": "One class per page keeps tests readable.", "tag": "pom" },
-        { "title": "Data Driven Testing", "about": "One test, many inputs", "body": "Read the inputs from a JSON file.", "tag": "data" }
+        {   "title": "Playwright Basics", 
+            "about": "Learning Playwright", 
+            "body": "Locators and assertions are the basics.", 
+            "tag": "playwright" 
+        },
+        {   "title": "Page Object Model", 
+            "about": "Organising page code", 
+            "body": "One class per page keeps tests readable.", 
+            "tag": "pom" 
+        },
+        {   "title": "Data Driven Testing", 
+            "about": "One test, many inputs", 
+            "body": "Read the inputs from a JSON file.", 
+            "tag": "data" 
+        }
     ]
 }

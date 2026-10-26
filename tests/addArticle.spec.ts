@@ -1,24 +1,22 @@
 import { test } from '../lib/fixtures/conduitPageFixtures'
 import { expect } from '@playwright/test'
-import { articles } from '../testData/data'
+import { articles, timeStamp } from '../testData/data'
 
 test.describe('Add Articles', () => {
-    // No login here: the session comes from auth.setup.ts via storageState
     test.beforeEach(async ({ page }) => {
         await page.goto('/')
     })
 
-    // Attach a screenshot when a test fails
     test.afterEach(async ({ page }, testInfo) => {
         if (testInfo.status !== testInfo.expectedStatus) {
             await testInfo.attach('failure', { body: await page.screenshot(), contentType: 'image/png' })
         }
     })
 
-    // Data-driven from articles.json: one test per article
+    // Data-driven 
     for (const { title, about, body, tag } of articles) {
         test(`adds article ${title}`, async ({ page, homePage, editorPage, articlePage }) => {
-            const uniqueTitle = `${title} ${Date.now()}`
+            const uniqueTitle = `${title} ${timeStamp()}`
             await homePage.openNewArticle()
             await editorPage.publishArticle(uniqueTitle, about, body, tag)
 
@@ -27,6 +25,12 @@ test.describe('Add Articles', () => {
             await expect(articleTitle).toHaveText(uniqueTitle)
             const articleBody = await articlePage.isArticleBodyDisplayed()
             await expect(articleBody).toContainText(body)
+
+            // new article listed in Global Feed
+            await page.goto('/')
+            await homePage.openGlobalFeed()
+            const inFeed = await homePage.articleInFeed(uniqueTitle)
+            await expect(inFeed).toBeVisible()
         })
     }
 })

@@ -8,7 +8,5 @@ setup('login and save session', async ({ page }) => {
     await page.getByPlaceholder('Password').fill(env.password)
     await page.getByRole('button', { name: 'Sign in' }).click()
     await expect(page.getByRole('link', { name: 'New Article' })).toBeVisible()
-
-    // Save cookies/localStorage
     await page.context().storageState({ path: authFile })
 })
